@@ -81,10 +81,18 @@ const courses = [
       </p>
     </div>
   </section>
-  <div class="service-info">
+  <div class="service-carousel">
     <Carousel></Carousel>
   </div>
   <section id="courses" class="courses-info container row jc-sb" style="gap: 20px">
+    <div class="courses-info">
+      <h2 class="section-title">Our Courses</h2>
+      <p class="paragraph">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut odio earum, eveniet recusandae
+        voluptatibus corrupti exercitationem natus, magni, quo magnam dicta fuga iusto tempora ipsum
+        itaque dignissimos! Provident, dignissimos quidem.
+      </p>
+    </div>
     <CourseCard
       v-for="(course, id) in courses"
       :v-for="id"
@@ -100,7 +108,7 @@ const courses = [
 
 <style>
 .banner {
-  margin: 3rem auto;
+  margin: 3rem auto 0 auto;
   height: 630px;
 }
 
@@ -161,8 +169,7 @@ const courses = [
 }
 
 .service-info {
-  width: 650px;
-  margin: 0 auto;
+  margin: 0rem auto 2rem auto;
   text-align: center;
 }
 

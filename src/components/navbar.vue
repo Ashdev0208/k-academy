@@ -54,10 +54,14 @@ function setActive(name) {
         <div class="burger-btn primary-btn">
           <button class="fa-brands fa-telegram btn burger"></button>
         </div>
-        <div class="primary-btn">
+        <div class="primary-btn nav-btns">
           <div class="btn">
             <i class="fa-brands fa-telegram"></i>
             <RouterLink :to="{ name: 'contact' }" class="btn">Contact</RouterLink>
+          </div>
+          <div class="btn">
+            <i class="fa-brands fa-telegram"></i>
+            <RouterLink :to="{ name: 'consulting' }" class="btn">Consulting</RouterLink>
           </div>
         </div>
       </nav>
@@ -109,6 +113,11 @@ a.active {
   border-radius: 0.5rem;
   font-size: 0.9rem;
   display: none;
+}
+.nav-btns {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 /* Tablet and mobile styles */
