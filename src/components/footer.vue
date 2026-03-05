@@ -43,6 +43,7 @@
 footer {
   background: #f9f1fe;
   padding: 3rem 0;
+  margin-top: 2rem;
   
 }
  .footer-content > li {

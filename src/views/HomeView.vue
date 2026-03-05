@@ -2,6 +2,11 @@
 import Carousel from '@/components/carousel.vue'
 import CourseCard from '@/components/CourseCard.vue'
 import { ref, defineOptions } from 'vue'
+import achievementCard from '@/components/achievementCard.vue'
+import { useAchievementStore } from '@/store'
+import { RouterLink } from 'vue-router'
+
+const achievements = useAchievementStore().getRandomAchievements()
 
 defineOptions({
   name: 'home',
@@ -54,7 +59,7 @@ const courses = [
 </script>
 
 <template>
-  <main class="container banner">
+  <main class="container banner" id="home">
     <div class="banner-content">
       <div class="slider-wrapper">
         <div class="slider-img">
@@ -101,8 +106,28 @@ const courses = [
       :teacher="course.teacher"
     ></CourseCard>
   </section>
-  <section class="testimonials" id="testimonials">
-    <SmallCard />
+  <section class="achievements container" id="achievements">
+    <div class="achievement-info">
+      <h2 class="section-title">Our Achievements</h2>
+      <p class="paragraph">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut odio earum, eveniet recusandae
+        voluptatibus corrupti exercitationem natus, magni, quo magnam dicta fuga iusto tempora ipsum
+        itaque dignissimos! Provident, dignissimos quidem.
+      </p>
+    </div>
+    <div class="achievement-wrapper row jc-sb">
+      <achievementCard
+        class="achievementCard"
+        v-for="achievement in achievements"
+        :key="achievement.id"
+        :title="achievement.title"
+        :description="achievement.disc"
+        :image="achievement.pic"
+      />
+    </div>
+    <div class="primary-btn">
+      <routerLink class="btn">View All</routerLink>
+    </div>
   </section>
 </template>
 
@@ -181,5 +206,24 @@ const courses = [
 }
 .service-info {
   width: 100%;
+}
+
+.achievementCard {
+  width: 30%;
+  margin: 1rem 0;
+}
+
+.achievements .primary-btn {
+  margin: 1rem auto;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.achievements .primary-btn .btn {
+  background: #0084ff;
+  color: #fff;
+  border-radius: 0.5rem;
+  font-size: 1.3rem;
 }
 </style>

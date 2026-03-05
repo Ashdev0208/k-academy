@@ -1,12 +1,9 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { ref } from 'vue'
-
-const activeSection = ref('home')
-
-function setActive(name) {
-  activeSection.value = name
-}
+import { ref, computed } from 'vue'
+import { routerLinkLine } from '@/store'
+const setActive = (name) => routerLinkLine().setActive(name)
+const activeLink = computed(() => routerLinkLine().activeLine)
 </script>
 
 <template>
@@ -14,54 +11,53 @@ function setActive(name) {
     <div class="wrapper">
       <nav class="row item-center">
         <div class="logo">
-          <RouterLink :to="{ name: 'home' }" class="link">K-ACADEMY</RouterLink>
+          <RouterLink to="/#home" class="link">K-ACADEMY</RouterLink>
         </div>
         <ul class="row links">
           <RouterLink
-            :to="{ name: 'home' }"
-            :class="{ active: activeSection === 'home' }"
+            to="/#home"
             @click="setActive('home')"
+            :class="{ active: activeLink === 'home' }"
+            class="link"
             >Home</RouterLink
           >
           <RouterLink
             to="/#services"
-            :class="{ active: activeSection === 'services' }"
             @click="setActive('services')"
+            :class="{ active: activeLink === 'services' }"
+            class="link"
             >Service</RouterLink
           >
           <RouterLink
             to="/#achievements"
-            :class="{ active: activeSection === 'achievements' }"
             @click="setActive('achievements')"
+            :class="{ active: activeLink === 'achievements' }"
             class="link"
             >Achievements</RouterLink
           >
           <RouterLink
             to="/#courses"
-            :class="{ active: activeSection === 'courses' }"
             @click="setActive('courses')"
+            :class="{ active: activeLink === 'courses' }"
             class="link"
             >Courses</RouterLink
-          >
-          <RouterLink
-            to="/#testimonials"
-            :class="{ active: activeSection === 'testimonials' }"
-            @click="setActive('testimonials')"
-            class="link"
-            >Testimonials</RouterLink
           >
         </ul>
         <div class="burger-btn primary-btn">
           <button class="fa-brands fa-telegram btn burger"></button>
         </div>
         <div class="primary-btn nav-btns">
-          <div class="btn">
+          <div class="btn" :class="{ active: activeLink === 'contact' }">
             <i class="fa-brands fa-telegram"></i>
-            <RouterLink :to="{ name: 'contact' }" class="btn">Contact</RouterLink>
+            <RouterLink :to="{ name: 'contact' }" @click="setActive('contact')" class="btn"
+              >Contact</RouterLink
+            >
           </div>
-          <div class="btn">
+          <div class="btn" :class="{ active: activeLink === 'consulting' }">
             <i class="fa-brands fa-telegram"></i>
-            <RouterLink :to="{ name: 'consulting' }" class="btn">Consulting</RouterLink>
+            <RouterLink :to="{ name: 'consulting' }" @click="setActive('consulting')" class="btn"
+              >Consulting</RouterLink
+            >
           </div>
         </div>
       </nav>
@@ -106,13 +102,24 @@ a.active {
   border-bottom: 2px solid #0084ff;
   padding-bottom: 0.3rem;
 }
+.burger-btn {
+  display: none;
+}
+
+.primary-btn .btn.active, .primary-btn .btn.active a {
+  background: #0084ff;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}
+
 .primary-btn .burger {
   background: #0084ff;
   color: #fff;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   font-size: 0.9rem;
-  display: none;
 }
 .nav-btns {
   display: flex;
@@ -150,20 +157,6 @@ a.active {
   .links a {
     display: block;
     padding: 10px 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .logo {
-    font-size: 1rem;
-  }
-
-  nav > ul {
-    gap: 5px;
-  }
-
-  .primary-btn {
-    display: none;
   }
 }
 </style>
