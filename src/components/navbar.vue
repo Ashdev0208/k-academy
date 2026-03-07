@@ -4,6 +4,15 @@ import { ref, computed } from 'vue'
 import { routerLinkLine } from '@/store'
 const setActive = (name) => routerLinkLine().setActive(name)
 const activeLink = computed(() => routerLinkLine().activeLine)
+const isMobileMenuOpen = ref(false)
+
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
+
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false
+}
 </script>
 
 <template>
@@ -11,7 +20,7 @@ const activeLink = computed(() => routerLinkLine().activeLine)
     <div class="wrapper">
       <nav class="row item-center">
         <div class="logo">
-          <RouterLink to="/#home" class="link">K-ACADEMY</RouterLink>
+          <RouterLink to="/#home" class="link" @click="closeMobileMenu">K-ACADEMY</RouterLink>
         </div>
         <ul class="row links">
           <RouterLink
@@ -43,8 +52,12 @@ const activeLink = computed(() => routerLinkLine().activeLine)
             >Courses</RouterLink
           >
         </ul>
-        <div class="burger-btn primary-btn">
-          <button class="fa-brands fa-telegram btn burger"></button>
+        <div class="burger-btn">
+          <button class="hamburger" @click="toggleMobileMenu" :class="{ active: isMobileMenuOpen }">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
         <div class="primary-btn nav-btns">
           <div class="btn" :class="{ active: activeLink === 'contact' }">
@@ -61,6 +74,38 @@ const activeLink = computed(() => routerLinkLine().activeLine)
           </div>
         </div>
       </nav>
+      <div class="mobile-menu" v-if="isMobileMenuOpen">
+        <RouterLink
+          to="/#home"
+          @click="setActive('home'); closeMobileMenu()"
+          :class="{ active: activeLink === 'home' }"
+          class="mobile-link"
+          >Home</RouterLink
+        >
+        <RouterLink
+          to="/#services"
+          @click="setActive('services'); closeMobileMenu()"
+          :class="{ active: activeLink === 'services' }"
+          class="mobile-link"
+          >Service</RouterLink
+        >
+        <RouterLink
+          to="/#achievements"
+          @click="setActive('achievements'); closeMobileMenu()"
+          :class="{ active: activeLink === 'achievements' }"
+          class="mobile-link"
+          >Achievements</RouterLink
+        >
+        <RouterLink
+          to="/#courses"
+          @click="setActive('courses'); closeMobileMenu()"
+          :class="{ active: activeLink === 'courses' }"
+          class="mobile-link"
+          >Courses</RouterLink
+        >
+        <RouterLink :to="{ name: 'contact' }" @click="setActive('contact'); closeMobileMenu()" class="mobile-link">Contact</RouterLink>
+        <RouterLink :to="{ name: 'consulting' }" @click="setActive('consulting'); closeMobileMenu()" class="mobile-link">Consulting</RouterLink>
+      </div>
     </div>
   </div>
 </template>
@@ -127,36 +172,114 @@ a.active {
   gap: 5px;
 }
 
-/* Tablet and mobile styles */
-@media (max-width: 900px) {
+.hamburger {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 5px;
+  padding: 0.5rem;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: #0084ff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(10px, 10px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.5rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+}
+
+.mobile-link {
+  color: #0084ff;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.mobile-link:hover,
+.mobile-link.active {
+  background: #0084ff;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .links {
+    display: none;
+  }
+  .burger-btn {
+    display: flex;
+  }
+  .hamburger {
+    display: flex;
+  }
   nav {
     width: 95%;
   }
-
-  nav > ul {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 80px;
-    left: 0;
-    right: 0;
-    background: #fff;
-    padding: 20px;
+  .nav-btns {
     gap: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-
-  nav > ul.active {
+  .primary-btn .btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  .mobile-menu {
     display: flex;
   }
+}
 
-  .primary-btn .burger {
-    display: block;
+@media (max-width: 480px) {
+  .navbar {
+    height: 70px;
   }
-
-  .links a {
-    display: block;
-    padding: 10px 0;
+  .wrapper {
+    height: 70px;
+  }
+  nav {
+    height: 70px;
+  }
+  .logo {
+    font-size: 1rem;
+  }
+  .nav-btns {
+    display: none;
+  }
+  .burger-btn {
+    display: flex;
+  }
+  .hamburger {
+    display: flex;
+  }
+  .mobile-menu {
+    top: 70px;
   }
 }
+
 </style>
