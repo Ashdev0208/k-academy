@@ -77,7 +77,7 @@ ul li {
     color: #000000d0;
 }
 
-section {
+section.container, .service {
     padding: 5rem 0 0 0;
 }
 

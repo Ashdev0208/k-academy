@@ -5,7 +5,13 @@
       <form @submit.prevent="submitForm">
         <div class="form-group">
           <label for="name">Name:</label>
-          <input v-model="form.name" type="text" id="name" required placeholder="Enter your name" />
+          <input
+            v-model="form.name"
+            type="text"
+            id="name"
+            required
+            placeholder="Enter your name"
+          />
         </div>
 
         <div class="form-group">
@@ -47,43 +53,49 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'contact',
-  data() {
-    return {
-      form: {
-        name: '',
-        email: '',
-        number: '',
-        course: '',
-      },
-      telegramToken: '8664887516:AAGgbKTJq506uXDYmz8lgQqrY4y2Q5ij0LM',
-      chatId: '5008712403',
-    }
-  },
-  methods: {
-    async submitForm() {
-      const message = `New Registration:\nName: ${this.form.name}\nEmail: ${this.form.email}\nPhone: ${this.form.number}\nCourse: ${this.form.course}`
+<script setup>
+import { reactive, onMounted } from "vue";
+import { useCourseStore } from '@/store';
 
-      try {
-        await fetch(`https://api.telegram.org/bot${this.telegramToken}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chat_id: this.chatId, text: message }),
-        })
-        alert('Registration sent successfully!')
-        this.resetForm()
-      } catch (error) {
-        alert('Error sending registration')
-        console.error(error)
-      }
-    },
-    resetForm() {
-      this.form = { name: '', email: '', number: '', course: '' }
-    },
-  },
-}
+
+const form = reactive({
+  name: "",
+  email: "",
+  number: "",
+  course: "",
+});
+
+const telegramToken = "8664887516:AAGgbKTJq506uXDYmz8lgQqrY4y2Q5ij0LM";
+const chatId = "5008712403";
+
+const submitForm = async () => {
+  const message = `New Registration:\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.number}\nCourse: ${form.course}`;
+
+  try {
+    await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: chatId, text: message }),
+    });
+    alert("Registration sent successfully!");
+    resetForm();
+  } catch (error) {
+    alert("Error sending registration");
+    console.error(error);
+  }
+};
+
+const resetForm = () => {
+  form.name = "";
+  form.email = "";
+  form.number = "";
+  form.course = "";
+};
+
+const courseStore = useCourseStore();
+
+console.log(courseStore.contactData.value);
+
 </script>
 
 <style scoped>

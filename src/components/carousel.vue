@@ -118,4 +118,12 @@ const cards = [
 .loop-slider:hover .inner {
   animation-play-state: paused;
 }
+
+@media screen and (max-width: 500px) {
+  .card {
+    width: 300px;
+    padding: 2rem 1rem;
+  }
+  
+}
 </style>

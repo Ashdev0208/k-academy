@@ -4,7 +4,18 @@ import { ref, computed } from 'vue'
 import { routerLinkLine } from '@/store'
 const setActive = (name) => routerLinkLine().setActive(name)
 const activeLink = computed(() => routerLinkLine().activeLine)
-const isMobileMenuOpen = ref(false)
+const isMobileMenuOpen = ref(false);
+const cloneBtns = document.querySelectorAll('.primary-btn .btn');
+
+function cloneItems(item,place) {
+  const clone = item.cloneNode(true);
+  document.querySelector(place).appendChild(clone);
+}
+console.log(cloneBtns);
+
+cloneBtns.forEach(btn => {
+  cloneItems(btn,'.mobile-menu');
+})
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
@@ -13,10 +24,15 @@ const toggleMobileMenu = () => {
 const closeMobileMenu = () => {
   isMobileMenuOpen.value = false
 }
+
+const resolution = ref(window.innerWidth);
+window.addEventListener('resize', () => {
+  resolution.value = window.innerWidth;
+});
 </script>
 
 <template>
-  <div class="navbar">
+  <div class="navbar" id="home">
     <div class="wrapper">
       <nav class="row item-center">
         <div class="logo">
@@ -103,8 +119,10 @@ const closeMobileMenu = () => {
           class="mobile-link"
           >Courses</RouterLink
         >
-        <RouterLink :to="{ name: 'contact' }" @click="setActive('contact'); closeMobileMenu()" class="mobile-link">Contact</RouterLink>
-        <RouterLink :to="{ name: 'consulting' }" @click="setActive('consulting'); closeMobileMenu()" class="mobile-link">Consulting</RouterLink>
+       <div class="primary-btn row ai-c jc-sb" style="text-align:center;padding:0.5rem 0;" v-if="resolution <= 480">
+         <RouterLink :to="{ name: 'contact' }" @click="setActive('contact'); closeMobileMenu()" class=" btn">Contact</RouterLink>
+        <RouterLink :to="{ name: 'consulting' }" @click="setActive('consulting'); closeMobileMenu()" class=" btn">Consulting</RouterLink>
+       </div>
       </div>
     </div>
   </div>
@@ -191,7 +209,7 @@ a.active {
 }
 
 .hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(10px, 10px);
+  transform: rotate(45deg) translate(3px, 10px);
 }
 
 .hamburger.active span:nth-child(2) {
@@ -199,7 +217,7 @@ a.active {
 }
 
 .hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -7px);
+    transform: rotate(-45deg) translate(2px, -9px);
 }
 
 .mobile-menu {
@@ -216,6 +234,10 @@ a.active {
   z-index: 99;
 }
 
+.mobile-menu .btn{
+  width: 45%;
+}
+
 .mobile-link {
   color: #0084ff;
   text-decoration: none;
@@ -230,7 +252,7 @@ a.active {
   color: #fff;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .links {
     display: none;
   }
@@ -247,7 +269,7 @@ a.active {
     gap: 10px;
   }
   .primary-btn .btn {
-    padding: 0.4rem 0.8rem;
+    padding: .8rem 0.8rem;
     font-size: 0.8rem;
   }
   .mobile-menu {

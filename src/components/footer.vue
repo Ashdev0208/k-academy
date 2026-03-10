@@ -75,4 +75,32 @@ iframe {
     font-weight: 400;
     font-size: .9rem;
 }
+
+@media screen and (max-width: 780px) {
+  .footer-content {
+    flex-direction: row;
+    gap: 2rem;
+  }
+  .footer-content > li:first-child {
+    width: 100%;
+  }
+
+  .footer-content > li:nth-child(2){
+      width: 30%;
+  }
+
+  .footer-content > li:last-child{
+      width: 60%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .footer-content > li {
+    width: 100% !important;
+  }
+}
 </style>

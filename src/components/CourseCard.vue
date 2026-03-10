@@ -1,9 +1,18 @@
 <script setup>
 import { defineProps } from 'vue'
+import { RouterLink } from 'vue-router'
+import { useCourseStore } from '@/store';
+const courseStore = useCourseStore();
+const setCourse = id => {
+  courseStore.setCourseById(id);
+}
 const props = defineProps({
   title: String,
   desc: String,
   teacher: String,
+  id: {
+    type: Number,
+  },
   required: true,
 })
 </script>
@@ -21,10 +30,10 @@ const props = defineProps({
       </div>
     </div>
     <div class="card-desc">
-      <p>{{ desc }}</p>
+      <p>{{ id }}</p>
     </div>
     <div class="primary-btn">
-      <button class="btn">book appointment</button>
+      <routerLink class="btn" :to="{ name: 'contact' }" @click='setCourse(id)'>book appointment</routerLink>
     </div>
   </div>
 </template>
