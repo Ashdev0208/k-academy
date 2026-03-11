@@ -5,7 +5,6 @@ import { ref, defineOptions } from "vue";
 import achievementCard from "@/components/achievementCard.vue";
 import { useAchievementStore, useCourseStore } from "@/store";
 import { RouterLink } from "vue-router";
-import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
 const achievements = useAchievementStore().getRandomAchievements();

@@ -3,6 +3,7 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import 'vue3-carousel/dist/carousel.css'
 
 import App from './App.vue'
 import router from './router'
