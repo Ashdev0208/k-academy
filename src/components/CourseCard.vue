@@ -3,37 +3,32 @@ import { defineProps } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useCourseStore } from '@/store';
 const courseStore = useCourseStore();
+const coursesContainer = useCourseStore().courses;
+
 const setCourse = id => {
   courseStore.setCourseById(id);
+  
 }
-const props = defineProps({
-  title: String,
-  desc: String,
-  teacher: String,
-  id: {
-    type: Number,
-  },
-  required: true,
-})
+
 </script>
 <template>
-  <div class="card">
+  <div class="card" v-for="card in coursesContainer" :key="card.id">
     <div class="card-title row js-sb">
       <div class="title-logo"><i class="fa fa-user"></i></div>
       <div class="title-content">
         <div class="title">
-          {{ teacher }}
+          {{ card.title }}
         </div>
         <div class="desc">
-          <p>{{ title }}</p>
+          <p>{{ card.description }}</p>
         </div>
       </div>
     </div>
     <div class="card-desc">
-      <p>{{ id }}</p>
+      <p>{{ card.id }}</p>
     </div>
     <div class="primary-btn">
-      <routerLink class="btn" :to="{ name: 'contact' }" @click='setCourse(id)'>book appointment</routerLink>
+      <routerLink class="btn" :to="{ name: 'contact' }" @click='setCourse(card.id)'>book appointment</routerLink>
     </div>
   </div>
 </template>

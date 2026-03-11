@@ -3,15 +3,12 @@
     <div class="registration-container">
       <h1>Registration Form</h1>
       <form @submit.prevent="submitForm">
+        <div class="success-message" v-if="showSuccess">
+          <p>the message has been sent successfully!</p>
+        </div>
         <div class="form-group">
           <label for="name">Name:</label>
-          <input
-            v-model="form.name"
-            type="text"
-            id="name"
-            required
-            placeholder="Enter your name"
-          />
+          <input v-model="form.name" type="text" id="name" required placeholder="Enter your name" />
         </div>
 
         <div class="form-group">
@@ -35,6 +32,16 @@
             placeholder="Enter your phone number"
           />
         </div>
+        <div class="form-group">
+          <label for="teacher">Course Teacher:</label>
+          <input
+            v-model="form.teacher"
+            type="text"
+            id="teacher"
+            required
+            placeholder="Enter course teacher name"
+          />
+        </div>
 
         <div class="form-group">
           <label for="courses">Select Course:</label>
@@ -54,48 +61,57 @@
 </template>
 
 <script setup>
-import { reactive, onMounted } from "vue";
-import { useCourseStore } from '@/store';
+import { reactive, ref } from 'vue'
+import { useCourseStore } from '@/store'
 
+const showSuccess = ref(false)
 
 const form = reactive({
-  name: "",
-  email: "",
-  number: "",
-  course: "",
-});
+  name: '',
+  email: '',
+  number: '',
+  course: '',
+  teacher: '',
+})
 
-const telegramToken = "8664887516:AAGgbKTJq506uXDYmz8lgQqrY4y2Q5ij0LM";
-const chatId = "5008712403";
+const telegramToken = '8664887516:AAGgbKTJq506uXDYmz8lgQqrY4y2Q5ij0LM'
+const chatId = '5008712403'
 
 const submitForm = async () => {
-  const message = `New Registration:\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.number}\nCourse: ${form.course}`;
+  const message = `New Registration:\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.number}\nCourse: ${form.course}`
 
   try {
     await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ chat_id: chatId, text: message }),
-    });
-    alert("Registration sent successfully!");
-    resetForm();
+    })
+    showSuccess.value = true
+    resetForm()
   } catch (error) {
-    alert("Error sending registration");
-    console.error(error);
+    showSuccess.value = false
+    console.error(error)
   }
-};
+}
 
 const resetForm = () => {
-  form.name = "";
-  form.email = "";
-  form.number = "";
-  form.course = "";
-};
+  form.name = ''
+  form.email = ''
+  form.number = ''
+  form.course = ''
+  form.teacher = ''
+  setTimeout(() => {
+    showSuccess.value = false
+  }, 3000)
+}
 
-const courseStore = useCourseStore();
-
-console.log(courseStore.contactData.value);
-
+const courseStore = useCourseStore()
+const selectedCourse = courseStore.getCourseById()
+if (selectedCourse) {
+  ;((form.teacher = selectedCourse.teacher), (form.course = selectedCourse.title))
+} else {
+  form.teacher = ''
+}
 </script>
 
 <style scoped>
@@ -155,5 +171,33 @@ input:focus {
 
 .submit-btn:hover {
   background-color: #0073e6;
+}
+
+.success-message {
+  margin: 20px 0;
+  padding: 10px;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+}
+.success-message p {
+  margin: 0;
+  font-size: 14px;
+}
+@media screen and (max-width: 600px) {
+  .registration-container {
+    padding: 15px;
+  }
+  input,
+  select {
+    font-size: 12px;
+  }
+  .submit-btn {
+    font-size: 14px;
+  }
+  .success-message p {
+    font-size: 12px;
+  }
 }
 </style>

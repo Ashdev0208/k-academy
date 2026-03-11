@@ -1,18 +1,18 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 export const routerLinkLine = defineStore('routerLinkLine', () => {
-  const activeLine = ref('home');
+  const activeLine = ref('home')
 
   function setActive(name) {
-    activeLine.value = name;
-    console.log(name);
+    activeLine.value = name
+    console.log(name)
   }
   return {
     activeLine,
     setActive,
-  };
-});
+  }
+})
 export const useAchievementStore = defineStore('achievement', () => {
   const achievements = ref([
     {
@@ -69,23 +69,23 @@ export const useAchievementStore = defineStore('achievement', () => {
       title: 'Master',
       disc: 'Complete 100 tasks',
     },
-  ]);
+  ])
 
   const getRandomAchievements = () => {
-    const shuffled = [...achievements.value].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, 6);
-  };
+    const shuffled = [...achievements.value].sort(() => Math.random() - 0.5)
+    return shuffled.slice(0, 6)
+  }
 
   const getAchievementById = (id) => {
-    return achievements.value.find((a) => a.id === id);
-  };
+    return achievements.value.find((a) => a.id === id)
+  }
 
   return {
     achievements,
     getRandomAchievements,
     getAchievementById,
-  };
-});
+  }
+})
 
 export const useCourseStore = defineStore('course', () => {
   const courses = ref({
@@ -125,24 +125,20 @@ export const useCourseStore = defineStore('course', () => {
       text: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.',
       teacher: 'Michael Davis',
     },
-  });
+  })
 
-  const contactData = ref(null);
-
+  const contactData = ref(null)
+  const getCourseById = () => {
+    return courses.value['course' + contactData.value]
+  }
   const setCourseById = (id) => {
     contactData.value = id
-    console.log(id);
-    
-  };
-
-  const getCourseById = (id) => {
-    return courses.value[`course${id}`];
-  };
+  }
 
   return {
     courses,
     setCourseById,
     getCourseById,
     contactData,
-  };
-});
+  }
+})

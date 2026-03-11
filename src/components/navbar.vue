@@ -7,15 +7,6 @@ const activeLink = computed(() => routerLinkLine().activeLine)
 const isMobileMenuOpen = ref(false);
 const cloneBtns = document.querySelectorAll('.primary-btn .btn');
 
-function cloneItems(item,place) {
-  const clone = item.cloneNode(true);
-  document.querySelector(place).appendChild(clone);
-}
-console.log(cloneBtns);
-
-cloneBtns.forEach(btn => {
-  cloneItems(btn,'.mobile-menu');
-})
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value

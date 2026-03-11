@@ -1,78 +1,42 @@
 <script setup>
-import CarouselCard from "@/components/carousel.vue";
-import CourseCard from "@/components/CourseCard.vue";
-import { ref, defineOptions } from "vue";
-import achievementCard from "@/components/achievementCard.vue";
-import { useAchievementStore, useCourseStore } from "@/store";
-import { RouterLink } from "vue-router";
+import CarouselCard from '@/components/carousel.vue'
+import CourseCard from '@/components/CourseCard.vue'
+import { ref, defineOptions } from 'vue'
+import achievementCard from '@/components/achievementCard.vue'
+import { useAchievementStore, useCourseStore } from '@/store'
+import { RouterLink } from 'vue-router'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
-const achievements = useAchievementStore().getRandomAchievements();
-const coursesContainer = useCourseStore().courses;
-
+const achievements = useAchievementStore().getRandomAchievements()
 
 defineOptions({
-  name: "home",
-});
+  name: 'home',
+})
 
 const sliderImgs = ref([
-  "https://img.freepik.com/free-photo/auto-repairman-talking-phone-while-using-laptop-workshop_637285-9761.jpg?t=st=1770787580~exp=1770791180~hmac=4ae2e48d4c244d5226c9dda920fc131f25df5e3e857811450613a3ab3882a61b",
-  "https://img.freepik.com/free-photo/repairman-looks-online-new-car-parts_482257-76170.jpg?t=st=1770787702~exp=1770791302~hmac=fa167e3b44c2a3efe0e237e944e4f588393a70c94b2cc55f5d62aa0d48db19d7",
-  "https://img.freepik.com/free-photo/customer-satisfaction-service-care-problem-solving_53876-120094.jpg?t=st=1770787798~exp=1770791398~hmac=4ec866cc0a87aa4eea1c4445abc3beac6d4349e1651148398d0009fb32534197",
-]);
+  'https://img.freepik.com/free-photo/auto-repairman-talking-phone-while-using-laptop-workshop_637285-9761.jpg?t=st=1770787580~exp=1770791180~hmac=4ae2e48d4c244d5226c9dda920fc131f25df5e3e857811450613a3ab3882a61b',
+  'https://img.freepik.com/free-photo/repairman-looks-online-new-car-parts_482257-76170.jpg?t=st=1770787702~exp=1770791302~hmac=fa167e3b44c2a3efe0e237e944e4f588393a70c94b2cc55f5d62aa0d48db19d7',
+  'https://img.freepik.com/free-photo/customer-satisfaction-service-care-problem-solving_53876-120094.jpg?t=st=1770787798~exp=1770791398~hmac=4ec866cc0a87aa4eea1c4445abc3beac6d4349e1651148398d0009fb32534197',
+])
 const cards = [
-  { id: 0, title: "User 1", text: "Lorem ipsum dolor sit amet." },
-  { id: 1, title: "User 2", text: "Dolores saepe optio exercitationem." },
-  { id: 2, title: "User 3", text: "Sapiente culpa nulla adipisci." },
-  { id: 3, title: "User 4", text: "Reprehenderit minus doloremque." },
-];
+  { id: 0, title: 'User 1', text: 'Lorem ipsum dolor sit amet.' },
+  { id: 1, title: 'User 2', text: 'Dolores saepe optio exercitationem.' },
+  { id: 2, title: 'User 3', text: 'Sapiente culpa nulla adipisci.' },
+  { id: 3, title: 'User 4', text: 'Reprehenderit minus doloremque.' },
+]
 
-const courses = [
-  {
-    title: "Logo Design",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
-    teacher: "someBody",
-  },
-  {
-    title: "Typography",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
-    teacher: "someBody",
-  },
-  {
-    title: "Logo Design",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
-    teacher: "someBody",
-  },
-  {
-    title: "Typography",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
-    teacher: "someBody",
-  },
-  {
-    title: "Brand Identity",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
-    teacher: "someBody",
-  },
-  {
-    title: "Figma Essentials",
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ",
-    teacher: "someBody",
-  },
-];
 const carouselConfig = {
   itemsToShow: 1,
-  wrapAround: true,    // Infinite loop
-  autoplay: 3000,      // 3 seconds
+  wrapAround: true, // Infinite loop
+  autoplay: 3000, // 3 seconds
   transition: 400,
-};
-
+}
 </script>
 
 <template>
-<main class="container banner" >
+  <main class="container banner">
     <div class="banner-content">
       <div class="slider-wrapper">
-        
         <Carousel v-bind="carouselConfig">
           <Slide v-for="(img, index) in sliderImgs" :key="index">
             <div class="slider-img">
@@ -84,7 +48,6 @@ const carouselConfig = {
             <Pagination />
           </template>
         </Carousel>
-
       </div>
     </div>
   </main>
@@ -92,49 +55,35 @@ const carouselConfig = {
     <div class="service-info">
       <h2 class="section-title">Our Services</h2>
       <p class="paragraph">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut odio earum,
-        eveniet recusandae voluptatibus corrupti exercitationem natus, magni,
-        quo magnam dicta fuga iusto tempora ipsum itaque dignissimos! Provident,
-        dignissimos quidem.
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut odio earum, eveniet recusandae
+        voluptatibus corrupti exercitationem natus, magni, quo magnam dicta fuga iusto tempora ipsum
+        itaque dignissimos! Provident, dignissimos quidem.
       </p>
     </div>
   </section>
   <div class="service-carousel">
     <CarouselCard></CarouselCard>
   </div>
-  <section
-    id="courses"
-    class="courses-info container row jc-sb"
-    style="gap: 20px"
-  >
+  <section id="courses" class="courses-info container row jc-sb" style="gap: 20px">
     <div class="courses-info">
       <h2 class="section-title">Our Courses</h2>
       <p class="paragraph">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut odio earum,
-        eveniet recusandae voluptatibus corrupti exercitationem natus, magni,
-        quo magnam dicta fuga iusto tempora ipsum itaque dignissimos! Provident,
-        dignissimos quidem.
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut odio earum, eveniet recusandae
+        voluptatibus corrupti exercitationem natus, magni, quo magnam dicta fuga iusto tempora ipsum
+        itaque dignissimos! Provident, dignissimos quidem.
       </p>
     </div>
     <div class="courses row jc-sb" style="gap: 20px 0">
-      <CourseCard
-      v-for="(course, id) in coursesContainer"
-      :v-for="id"
-      :title="course.title"
-      :desc="course.text"
-      :teacher="course.teacher"
-      :id="id"
-    ></CourseCard>
+      <CourseCard></CourseCard>
     </div>
   </section>
   <section class="achievements container" id="achievements">
     <div class="achievement-info">
       <h2 class="section-title">Our Achievements</h2>
       <p class="paragraph">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut odio earum,
-        eveniet recusandae voluptatibus corrupti exercitationem natus, magni,
-        quo magnam dicta fuga iusto tempora ipsum itaque dignissimos! Provident,
-        dignissimos quidem.
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut odio earum, eveniet recusandae
+        voluptatibus corrupti exercitationem natus, magni, quo magnam dicta fuga iusto tempora ipsum
+        itaque dignissimos! Provident, dignissimos quidem.
       </p>
     </div>
     <div class="achievement-wrapper row jc-sb">
@@ -230,16 +179,13 @@ const carouselConfig = {
     flex-direction: column;
     align-items: center;
   }
-  .courses .card{
+  .courses .card {
     width: 48%;
   }
-
-
-  
 }
 
-@media screen and (max-width:700px) {
-    .courses .card{
+@media screen and (max-width: 700px) {
+  .courses .card {
     width: 94%;
     margin: 0 auto;
   }
